@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intelligent Lane Monitoring System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Outfit', sans-serif;
+      height: 100%;
+      background: url('./assets/bg2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    header {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .main-title {
+      font-size: 42px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .top-nav {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .top-nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 18px;
+      margin: 0 20px;
+      padding: 6px 16px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .top-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .quote {
+      text-align: center;
+      font-style: italic;
+      font-size: 15px;
+      color: #ccc;
+      margin-bottom: 40px;
+      margin-top: 10px;
+    }
+
+    .feature-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 40px;
+      flex-wrap: nowrap;
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .feature-box {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 30px 20px;
+      width: 300px;
+      height: 240px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-8px);
+      background-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .feature-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #00ffff;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      color: #ddd;
+      padding: 0 10px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      padding: 20px 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    @media screen and (max-width: 1300px) {
+      .feature-container {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .feature-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .feature-box {
+        width: 90%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay">
+    <div>
+      <header>
+        <h1 class="main-title">Intelligent Lane Monitoring System</h1>
+      </header>
+
+      <nav class="top-nav">
+        <a href="#">Home</a>
+        <a href="about.html">About Us</a>
+      </nav>
+
+      <p class="quote">"Revolutionizing Roads with Intelligence and Insight."</p>
+
+      <section class="feature-container">
+        <div class="feature-box" onclick="location.href='vehicle.html';">
+          <div class="feature-title">🚗 Vehicle Type Classification</div>
+          <div class="feature-desc">Detect and classify vehicle types using AI-powered models.</div>
+        </div>
+
+        <div class="feature-box" onclick="location.href='speed_estimation.html';">
+          <div class="feature-title">⏱️ Speed Estimation</div>
+          <div class="feature-desc">Estimate vehicle speeds accurately in real time using video data.</div>
+        </div>
+
+        <div class="feature-box" onclick="location.href='analytics.html';">
+          <div class="feature-title">📊 Historical Analytics</div>
+          <div class="feature-desc">View past traffic data for trends, peaks, and planning insights.</div>
+        </div>
+
+        <div class="feature-box" onclick="location.href='weather.html';">
+          <div class="feature-title">🌦️ Weather Integration</div>
+          <div class="feature-desc">Incorporate weather insights for smarter traffic monitoring.</div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Intelligent Lane Monitoring System. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    async function loadData() {
+      try {
+        const res = await fetch('http://127.0.0.1:5000/api/metrics');
+        const data = await res.json();
+
+        document.getElementById('vehicleCounts').innerText = `Vehicle Count: ${JSON.stringify(data.vehicle_counts)}`;
+        document.getElementById('avgSpeed').innerText = `Avg Speed: ${data.average_speed} km/h`;
+        document.getElementById('weather').innerText = `Weather: ${data.weather.temp}°C, ${data.weather.condition}, Wind ${data.weather.wind} m/s`;
+      } catch (error) {
+        document.getElementById('vehicleCounts').innerText = 'Vehicle Count: Data unavailable';
+        document.getElementById('avgSpeed').innerText = 'Avg Speed: Data unavailable';
+        document.getElementById('weather').innerText = 'Weather: Data unavailable';
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
